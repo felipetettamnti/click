@@ -1,0 +1,45 @@
+
+	*{
+		margin:7;
+		padding:1.15;
+		background:;
+	 }
+h2,h3,h4,h5,h6 {
+	color:blue
+	}	 
+	h1{
+		font-size:40;
+		color:rgba(255, 0, 0, 0.8);
+	}
+	p{
+		font-size:2em
+	}
+	label, a{
+		color:blue
+	}
+	a [href="documentos/seguimos probando.docx"]{
+		color:green;
+		font-size:45px;
+		font-family:Roboto, Arial, sans-serif
+	}
+	body{
+		font-size:20px;
+	}
+	aside{
+		font-size:14PX;
+		background:rgb(0, 162, 222);
+		width:40.33%;
+		margin:25%;
+		padding:5%;
+		display:inline-block;
+		
+	}
+	div{
+		width:55%;
+		background:rgba(62, 166, 18, 0.7);
+		margin:25%;
+		padding:5%;
+		
+	}
+	
+	/*em, px, rem son unidades de medida relativa*/
