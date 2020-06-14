@@ -1,18 +1,18 @@
 #tituloclickuno{
-	font-size: 100px;
-    font-family: arial;
-    border: 3px solid black;
+	font-size: 100px
+	font-family: arial;
+    	border: 3px solid black;
 }
 #subtitulouno{
 	font-size: 35px;
-    font-family: arial
+    	font-family: arial
 }
 
 #asideleft{
 	font-size: 17px;
 	font-family: arial
-    width:60px;
-    background: green;
+    	width:60px;
+    	background: green;
 }
 #navegacion{
 	font-size: 15px;
