@@ -1,39 +1,60 @@
-#tituloclickuno{
-	font-size: 100px;
-    font-family: arial;
-    border: 3px solid black; 
-	width:100%;
-	margin-bottom:0px;
-	margin-top: 0px;
-	
+*{
+	margin:0;
+	padding:0;
 }
-    
- nav ul li{
-	font-size:15px;
-	display: inline-block;
-	border: 1px solid black;
-	padding:10px;
-	margin: auto;
-	float: right;
-	
-	
+.wrepper{
+	width:90%;
+	max-width:100px;
+	margin:auto;
+	overflow:hidden;
+}
+#tituloclickuno{
+	font-size:100px;
+	font-family: arial;
+	float: left;
+	width:100%;
+	border:3px solid black;
+	margin-bottom:0px;
+	margin-top:0px;
+	line-height:100px;
 	
 }
 
-#subtitulouno{
-	padding:0;
-	margin:15px;
-	font-size: 20px;
-    font-family: arial;
+header nav{
+	float:right;
+	line-height:100px;
 }
-#titulodos{
-	text-align: center;
-	margin-top: none;
+
+header{
+	width:100%;
+	overflow:hidden;
+	margin:bottom;
 }
+header nav a{
+	display:inline-block;
+	padding:10px;
+	font-size:20px;
+	line-height:normal;
+	text-decoration:none;
+	transition:all 500m ease;
+	color: black;
+	border-radius:50px;
+}
+
+header nav a:hover{
+	background: #f56f3a
+}
+
+header: nav a:hover{
+	background:#f56f3a;
+}
+
+
 #mapa{
 	text-align: center;
-	background: #8BB0EC;
+	background: #d8e2e9;
 	margin-bottom:50px;
+	margin-top:10px;
 	padding:5px;
 	
 }
