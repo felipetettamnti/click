@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html lang="en"
+   
+     <head>
+	     
+		 <title> Formulario de registro</title>
+		 <link rel="stylesheet" href="styleregistro.css">
+     </head>
+	 <body>
+	  
+	     <section class="form-register">
+		    <h4>Formulario de Registro</h4>
+		    <input class="controls" type="text" name="Nombres" id="Nombre" placeholder="Ingrese su Nombre">
+			<input class="controls"  type="text" name="Nombres" id="Nombre" placeholder="Ingrese su Apellido">
+			<input class="controls"  type="email" name="Nombres" id="Nombre" placeholder="Ingrese su Correo">
+			<input class="controls"  type="pass" name="Nombres" id="Nombre" placeholder="Ingrese su Contraseña">
+		    <p>Estoy de acuerdo con <a href="#"> Terminos y condiciones</a></p>
+			<input class="botones" type="submit" value="Registrar">
+			<p><a href="#">¿Ya tengo cuenta?</a></p>
+			
+			
+			</section>
+			
