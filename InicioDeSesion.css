@@ -1,0 +1,53 @@
+*{
+	margin: 0;
+	padding:0;
+	box-sizing: border-box;
+
+}
+body {
+	background-image: url('Fond2.jpg');
+}
+
+.iniciodesesion{
+	width:400px;
+	background: #8BB0EC;
+	padding: 30px;
+	margin: auto;
+	margin-top: 100px;
+	border-radius:4px;
+	font-family: arial;
+	box-shadow: 7px 13px 37px #000;
+	border: 2px solid black;
+	text-align:center;
+}
+
+.iniciodesesion h4{
+	font-size:22px;
+	margin-bottom:20px;
+}
+
+.controls{
+     width: 100%;
+	 padding: 10px;
+	 border-radius:4px;
+	 margin-bottom:16px;
+	 border: 1px solid black;
+	 front-family: calibri;
+	 font-size:18px;
+}
+
+.iniciodesesion .botones{
+	font-family: verdana;
+	width: 100%;
+	background: #1f53c5;
+	border:none;
+	padding:12px;
+	color: white;
+	margin: 16px 0;
+	font-size:16px;
+	border: 2px solid black;
+}
+
+p{
+	text-align:center;
+}
