@@ -8,17 +8,17 @@
 	margin:auto;
 	overflow:hidden;
 }
-#tituloclickuno{
+#tituloclickuno {
 	font-size:100px;
 	font-family: arial;
-	float: left;
+	float:left;
 	width:100%;
-	border:3px solid black;
-	margin-bottom:0px;
-	margin-top:0px;
+	border: 4px solid black;
+	text-decoration:none;
 	line-height:100px;
 	
 }
+
 
 header nav{
 	float:right;
@@ -59,6 +59,13 @@ header: nav a:hover{
 	
 }
 
+#titulodos{
+	text-align:center;
+	text-family: arial;
+	
+}
+
+
 #cuerpotres{
 	text-align: center;
 }
@@ -69,3 +76,20 @@ header: nav a:hover{
     width:60%;
     background: green;
 }
+
+
+footer{
+	height:70px;
+	background-color: #8BB0EC;
+	margin-top:5px;
+	color:black;
+	font-weight:800;
+	font-size:17px;
+	letter-spacing:2px;
+	text-align:center;
+	padding-top:25px;
+	text-family:arial;
+	
+	}
+
+	
