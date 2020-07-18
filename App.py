@@ -3,7 +3,6 @@ from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 
-
 app.config ['MYSQL_HOST'] = 'localhost'
 app.config ['MYSQL_USER'] = 'root'
 app.config ['MYSQL_PASSWORD'] = ''
@@ -31,10 +30,24 @@ def add_contact():
      (Nombre,Email,Contraseña,ConfirmarContraseña))
      mysql.connection.commit()
      flash('Contact Added successfully')
-     
      return redirect(url_for('Index'))
     
+    if request.method == 'POST':
+     Nombredellocal  = request.form ['Nombredellocal']
+     Direccion = request.form ['Direccion']
+     Correo = request.form ['Correo']
+     Contraseña = request.form ['Contraseña']
+     cur = mysql.connection.cursor()
+     cur.execute('INSERT INTO datos2(Nombredellocal, Direccion, Correo, Contraseña) VALUES (%s, %s, %s, %s)', 
+     (Nombredellocal, Direccion, Correo, Contraseña))
+     mysql.connection.commit()
+     flash('Contact Added successfully')
+      
+     return 'iei'
     
+
+
+
 
 @app.route('/edit' )
 def edit_contact():
@@ -46,4 +59,5 @@ def delete_contact():
 
 if __name__  ==  '__main__':
     app.run(port = 3000, debug = True)
+
 
