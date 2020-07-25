@@ -27,29 +27,37 @@ def add_contact():
      ConfirmarContraseña = request.form ['ConfirmarContraseña']
      cur = mysql.connection.cursor()
      cur.execute('INSERT INTO datos(Nombre, Email, Contraseña, ConfirmarContraseña) VALUES (%s, %s, %s, %s)', 
-     (Nombre,Email,Contraseña,ConfirmarContraseña))
+     (Nombre,Email,Contraseña,ConfirmarContraseña))   
      mysql.connection.commit()
-     flash('Contact Added successfully')
-     return redirect(url_for('Index'))
-    
+     flash('Contact Added successfully')    
+     return 'iei'
+   
+@app.route('/add_contact2', methods=['POST'])
+def add_contact2():
     if request.method == 'POST':
      Nombredellocal  = request.form ['Nombredellocal']
      Direccion = request.form ['Direccion']
      Correo = request.form ['Correo']
      Contraseña = request.form ['Contraseña']
      cur = mysql.connection.cursor()
-     cur.execute('INSERT INTO datos2(Nombredellocal, Direccion, Correo, Contraseña) VALUES (%s, %s, %s, %s)', 
+     cur.execute("INSERT INTO datos2(Nombredellocal, Direccion, Correo, Contraseña) VALUES (%s, %s, %s, %s)",
      (Nombredellocal, Direccion, Correo, Contraseña))
      mysql.connection.commit()
-     flash('Contact Added successfully')
-      
      return 'iei'
-    
+
+     
+  
 
 
 
 
-@app.route('/edit' )
+
+
+
+
+
+
+@app.route('/edit')
 def edit_contact():
     return 'edit contact'
 
@@ -59,5 +67,4 @@ def delete_contact():
 
 if __name__  ==  '__main__':
     app.run(port = 3000, debug = True)
-
 
