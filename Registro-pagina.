@@ -1,47 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="e">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styloregistronuevo.css')}}">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
- 
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
- 
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
- 
-  <link rel="stylesheet" href="styleregistro.css">
- 
+  
+
   <title>Click-Registro</title>
 </head>
 <body>
    <div class="container">
      <div class="login-container">
        <div class="register">
-         <h2>Registrar Usuario</h2>
-         <form action="">
-           <input type="text" placeholder="Nombre y Apellido" class="nombre">
-           <input type="text" placeholder="Correo" class="correo">
-           <input type="password" placeholder="Contraseña" class="pass">
-           <input type="password" placeholder="Confirma contraseña" class="repass">
-		   <p>Estoy de acuerdo con <a href="#"> Terminos y condiciones</a></p>  
-		   <input type="submit" class="submit" value="REGISTRARSE">
-		   <p><a href="InicioDeSesion.html">¿Ya tengo cuenta?</a></p>
+         <h2>Registrar Usuario</h2>      
+         <form action="/add_contact" method="POST">
+          <input type="text" id="Nombre Completo" name="Nombre" placeholder="Nombre Completo" class="nombre">
+          <input type="text" id="Email" name="Email" placeholder="Email" class="correo">
+          <input type="password" id="Contraseña" name="Contraseña" placeholder="Contraseña" class="pass">
+          <input type="password" id="Confirmar Contraseña" name="ConfirmarContraseña" placeholder="Confirma contraseña" class="repass">
+      <p>Estoy de acuerdo con <a href="#"> Terminos y condiciones</a></p>  
+      <input type="submit" class="submit">
+      <p><a href="InicioDeSesion.html">¿Ya tengo cuenta?</a></p>
          </form>
        </div>
+
        <div class="login">
-         <h2>Registrar Comercio</h2>
-         <div class="login-items">
-			<input type="text" placeholder="Nombre del local" class="nombre">
-			<input type="text" placeholder="Direccion" class="correo">
-			<input type="password" placeholder="Correo" class="pass">
-			<input type="password" placeholder="Contraseña" class="repass">
-			<p>Estoy de acuerdo con <a href="#"> Terminos y condiciones</a></p>
-			<input type="submit" class="submit" value="REGISTRARSE">
-			<p><a href="InicioDeSesion.html">¿Ya tengo cuenta?</a></p>
-         </div>
-       </div>
-     </div>
-   </div>
+        <h2>Registrar Comercio</h2>
+        <div class="login-items">
+         <form action="/add_contact2" method="POST"> 
+           <input type="text" name="Nombredellocal" placeholder="Nombre del local" class="nombre">
+           <input type="text" name="Direccion" placeholder="Direccion" class="correo">
+           <input type="email" name="Correo" placeholder="Correo" class="correo">
+           <input type="password" name="Contraseña" placeholder="Contraseña" class="repass">
+      <p>Estoy de acuerdo con <a href="#"> Terminos y condiciones</a></p>
+    <input type="submit" class="submit"> 
+    <p><a href="InicioDeSesion.html">¿Ya tengo cuenta?</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
-			
