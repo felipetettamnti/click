@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 
 <html lang="e">
-    
-	 <head>
-	 
-	     <title>Iniciar Sesion</title>\
-		 <link rel="stylesheet" href="InicioDeSesion.css">
-     </head>
-	 
-	 <body>
-	 
-	     <section class="iniciodesesion">
-		     <h4>Iniciar Sesion</h4>
-			 <input class="controls"  type="email" name="Nombres" id="Nombre" placeholder="Ingrese su Correo">
-			 <input class="controls"  type="pass" name="Nombres" id="Nombre" placeholder="Ingrese su Contraseña">
-			 <input class="botones" type="submit" value="Iniciar Sesion.">
-			 <p><a href="#">¿Olvidaste tu cuenta?</a></p><p><a href="Index.html">Refistrate aqui.</a></p>
-			 
-			 </section>
+
+<head>
+
+	<title>Iniciar Sesion</title>\
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/InicioDeSesion.css')}}">
+</head>
+
+<body>
+
+	<section class="iniciodesesion">
+		<h4>Iniciar Sesion</h4>
+		<form action="/Sesion" method="POST">
+			<input class="controls" type="email" name="Email" id="Nombre" placeholder="Ingrese su Correo">
+			<input class="controls" type="pass" name="Contraseña" id="Nombre" placeholder="Ingrese su Contraseña">
+			<input class="botones" type="submit" value="Iniciar Sesion.">
+			<p><a href="texto.html"></a></p>
+			<p><a href="#">¿Olvidaste tu cuenta?</a></p>
+			<p><a href="{{ url_for ('Index') }}">Refistrate aqui.</a></p>
+		</form>
+	</section>
 
 </html>
