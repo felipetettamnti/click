@@ -1,16 +1,18 @@
-*{
+{
 	margin: 0;
 	padding:0;
 	box-sizing: border-box;
-
+	url_for 'static', filename='Fond2.jpg' 
 }
-body {
+
+body{
 	background-image: url('Fond2.jpg');
 }
 
+
 .iniciodesesion{
 	width:400px;
-	background: #8BB0EC;
+	background-image:repeating-linear-gradient(to bottom right, #1ab6b6, #4cac6e) ;
 	padding: 30px;
 	margin: auto;
 	margin-top: 100px;
@@ -32,7 +34,6 @@ body {
 	 border-radius:4px;
 	 margin-bottom:16px;
 	 border: 1px solid black;
-	 front-family: calibri;
 	 font-size:18px;
 }
 
@@ -50,4 +51,7 @@ body {
 
 p{
 	text-align:center;
+	padding:15px;
+	font-size:25px;
 }
+
