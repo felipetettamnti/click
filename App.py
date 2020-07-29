@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, g
-from flask_mysqldb import MySQLdb
+from flask_mysqldb import MySQL
 import os
 
 app = Flask(__name__)
@@ -20,10 +20,21 @@ def home():
     return render_template('texto.html')
 
 
-@app.route('/Sesion',  methods=['POST'])
+@app.route('/Sesion')
 def Sesion():
-
     return render_template('InicioDeSesion.html')
+
+
+@app.route('/Sesion', methods=['GET'])
+def Authenticate():
+    if request.method == 'GET':
+        Email = request.form['Email']
+        Contraseña = request.form['Contraseña']
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM Email Where Email = '" +
+                    Email + "' and Contraseña = '" + Contraseña + "'")
+        mysql.connection.commit()
+        return render_template('texto.html')
 
 
 @app.route('/Index')
@@ -71,4 +82,5 @@ def delete_contact():
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
+
 
