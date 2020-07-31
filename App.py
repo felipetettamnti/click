@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, g
 from flask_mysqldb import MySQL
-import os
+import pymysql
+
 
 app = Flask(__name__)
 
@@ -20,29 +21,53 @@ def home():
     return render_template('texto.html')
 
 
+
 @app.route('/Sesion')
-def Sesion():
+def login():
     return render_template('InicioDeSesion.html')
 
 
-@app.route('/Sesion', methods=['GET'])
+@app.route('/Sesion', methods=['POST', 'GET'])
 def Authenticate():
-    if request.method == 'GET':
-        Email = request.form['Email']
-        Contraseña = request.form['Contraseña']
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM Email Where Email = '" +
-                    Email + "' and Contraseña = '" + Contraseña + "'")
-        mysql.connection.commit()
-        return render_template('texto.html')
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    # Output message if something goes wrong...
+    msg = ''
+    # Check if "username" and "password" POST requests exist (user submitted form)
+    if request.method == 'POST' and 'Email' in request.form and 'Contraseña' in request.form:
+        # Create variables for easy access
+        username = request.form['Email']
+        password = request.form['Contraseña']
+        # Check if account exists using MySQL
+        cursor.execute(
+            'SELECT * FROM datos WHERE Email = %s AND Contraseña = %s', (Email, Contraseña))
+        # Fetch one record and return result
+        datos = cursor.fetchone()
+
+        if datos:
+            # Create session data, we can access this data in other routes
+            session['loggedin'] = True
+            session['id'] = datos['id']
+            session['Email'] = datos['Email']
+            # Redirect to home page
+            # return 'Logged in successfully!'
+            return redirect(url_for('home'))
+        else:
+            # Account doesnt exist or username/password incorrect
+            msg = 'Incorrect username/password!'
+
+    return render_template('index.html', msg=msg)
 
 
-@app.route('/Index')
+@app.route('/add_contact')
 def Index():
     return render_template('Index.html')
 
+# Esto es el registro
 
-@app.route('/add_contact', methods=['POST'])
+
+@app.route('/add_contact', methods=['GET', 'POST'])
 def add_contact():
     if request.method == 'POST':
         Nombre = request.form['Nombre']
@@ -54,6 +79,8 @@ def add_contact():
                     (Nombre, Email, Contraseña, ConfirmarContraseña))
         mysql.connection.commit()
         return render_template('Gracias.html')
+
+# Registro de los locales
 
 
 @app.route('/add_contact2', methods=['POST'])
@@ -82,5 +109,3 @@ def delete_contact():
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
-
-
