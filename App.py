@@ -1,8 +1,6 @@
 # app.py
 from flask import Flask, request, session, redirect, url_for, render_template
 from flaskext.mysql import MySQL
-from tkinter import ttk
-from tkinter import*
 import pymysql
 import re
 
