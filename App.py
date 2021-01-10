@@ -64,10 +64,10 @@ def login2():
             session['id'] = datos2['id']
             session['Email'] = datos2['Email']
 
-            return redirect(url_for('home'))
+            return redirect(url_for('profile22'))
         else:
             # esto es un mensaje por si la cagas y escribiste mal
-            msg = 'Incorrect username/password!'
+            msg = 'Usuario o contraseña'
 
         if datos:
     
@@ -75,7 +75,7 @@ def login2():
             session['id'] = datos['id']
             session['Email'] = datos['Email']
 
-            return redirect(url_for('home'))
+            return redirect(url_for('profile11'))
         else:
             # esto es un mensaje por si la cagas y escribiste mal
             msg = 'Incorrect username/password!'
@@ -83,41 +83,6 @@ def login2():
    
    
     return render_template('index.html', msg=msg)
-
-
-
-##@app.route('/pythonlogin/', methods=['GET', 'POST'])
-def login():
-
- # conexion a msql
-    conn = mysql.connect()
-    cursor = conn.cursor(pymysql.cursors.DictCursor)
-
-    # esto es el login
-
-    if request.method == 'POST' and 'Email' in request.form and 'Contraseña' in request.form:
-
-        Email = request.form['Email']
-        Contraseña = request.form['Contraseña']
-
-        cursor.execute(
-            'SELECT * FROM datos WHERE Email = %s AND Contraseña = %s', (Email, Contraseña))
-
-        datos = cursor.fetchone()
-
-     # If si la cuenta exisite, te manda a home, que es la pagina que veria el usuario al ingresar, en la misma estan los datos de su cuenta
-        if datos:
-
-            session['loggedin'] = True
-            session['id'] = datos['id']
-            session['Email'] = datos['Email']
-
-            return redirect(url_for('home'))
-        else:
-            # esto es un mensaje por si la cagas y escribiste mal
-            msg = 'Incorrect username/password!'
-
-    return render_template('index.html', msg=msg)##
 
 
 # http://localhost:5000/register - Esto es el registro a la pagina
