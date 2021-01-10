@@ -1,0 +1,24 @@
+{% extends 'layout2.html' %} {% block title %}Perfil | Click{% endblock %} {% block content %}
+<h1>Perfil</h1>
+<div>
+    <p>Los datos de tu cuenta se encuentran debajo:</p>
+    <table>
+        <tr>
+            <td>Nombre del local:</td>
+            <td>{{ datos2['Nombredellocal'] }}</td>
+        </tr>
+        <tr>
+            <td>Direccion:</td>
+            <td>{{ datos2['Direccion'] }}</td>
+        </tr>
+        <tr>
+            <td>Correo:</td>
+            <td>{{ datos2['Email'] }}</td>
+        </tr>
+        <tr>
+            <td>Contraseña:</td>
+            <td>{{ datos2['Contraseña'] }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}
