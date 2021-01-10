@@ -47,6 +47,16 @@ def login2():
 
         datos2 = cursor.fetchone()
 
+    if request.method == 'POST' and 'Email' in request.form and 'Contraseña' in request.form:
+    
+        Email = request.form['Email']
+        Contraseña = request.form['Contraseña']
+
+        cursor.execute(
+            'SELECT * FROM datos WHERE Email = %s AND Contraseña = %s', (Email, Contraseña))
+
+        datos = cursor.fetchone()    
+
     # If si la cuenta exisite, te manda a home, que es la pagina que veria el usuario al ingresar, en la misma estan los datos de su cuenta
         if datos2:
 
@@ -59,11 +69,25 @@ def login2():
             # esto es un mensaje por si la cagas y escribiste mal
             msg = 'Incorrect username/password!'
 
+        if datos:
+    
+            session['loggedin'] = True
+            session['id'] = datos['id']
+            session['Email'] = datos['Email']
+
+            return redirect(url_for('home'))
+        else:
+            # esto es un mensaje por si la cagas y escribiste mal
+            msg = 'Incorrect username/password!'
+
+   
+   
     return render_template('index.html', msg=msg)
 
 
-@app.route('/pythonlogin/', methods=['GET', 'POST'])
-def login1():
+
+##@app.route('/pythonlogin/', methods=['GET', 'POST'])
+def login():
 
  # conexion a msql
     conn = mysql.connect()
@@ -93,7 +117,7 @@ def login1():
             # esto es un mensaje por si la cagas y escribiste mal
             msg = 'Incorrect username/password!'
 
-    return render_template('index.html', msg=msg)
+    return render_template('index.html', msg=msg)##
 
 
 # http://localhost:5000/register - Esto es el registro a la pagina
@@ -187,7 +211,8 @@ def register2():
     return render_template('register.html', msg=msg)
 
 
-# http://localhost:5000/home - Esta es la pagina a la que accede el usuario al ingresar
+# http://localhost:5000/home - Esta es la pagina a la que accede el usuario al ingresar es home.html, es solo una interfaz para tener un recibimiento y de ahi podes elejir que hacer 
+
 
 
 @app.route('/home')
@@ -214,7 +239,7 @@ def logout():
     session.pop('id', None)
     session.pop('Nombre', None)
     # Redirect to login page
-    return redirect(url_for('login1'))
+    return redirect(url_for('login2'))
 
 # http://localhost:5000/profile - aca van a estar todas las caracteristicas de la cuenta
 
@@ -231,7 +256,7 @@ def profile11():
 
         return render_template('profile1.html', datos=datos)
     # esto es por is el usuario nopuede ingresar, lo redirecciona
-    return redirect(url_for('login1'))
+    return redirect(url_for('login2'))
 
 # http://localhost:5000/profile - aca van a estar todas las caracteristicas de la cuenta
 
@@ -267,3 +292,4 @@ def inventario():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
