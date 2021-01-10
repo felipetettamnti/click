@@ -4,7 +4,7 @@ from flaskext.mysql import MySQL
 import pymysql
 import re
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 
 app.secret_key = 'mysecretkey'
@@ -19,19 +19,16 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
 
-
-
 @app.route('/')
-def home():
+def home1():
     return render_template('Pagina_principal.html')
-
 
 
 # http://localhost:5000/pythonlogin/ - esta es la pagina para iniciar sesion
 
 
 @app.route('/pythonlogin/', methods=['GET', 'POST'])
-def login():
+def login2():
 
  # conexion a msql
     conn = mysql.connect()
@@ -62,6 +59,18 @@ def login():
             # esto es un mensaje por si la cagas y escribiste mal
             msg = 'Incorrect username/password!'
 
+    return render_template('index.html', msg=msg)
+
+
+@app.route('/pythonlogin/', methods=['GET', 'POST'])
+def login1():
+
+ # conexion a msql
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    # esto es el login
+
     if request.method == 'POST' and 'Email' in request.form and 'Contraseña' in request.form:
 
         Email = request.form['Email']
@@ -72,7 +81,7 @@ def login():
 
         datos = cursor.fetchone()
 
-    # If si la cuenta exisite, te manda a home, que es la pagina que veria el usuario al ingresar, en la misma estan los datos de su cuenta
+     # If si la cuenta exisite, te manda a home, que es la pagina que veria el usuario al ingresar, en la misma estan los datos de su cuenta
         if datos:
 
             session['loggedin'] = True
@@ -85,6 +94,7 @@ def login():
             msg = 'Incorrect username/password!'
 
     return render_template('index.html', msg=msg)
+
 
 # http://localhost:5000/register - Esto es el registro a la pagina
 
@@ -142,11 +152,11 @@ def register2():
 
     # esto es la conexion a mysql para el registro
 
-    if request.method == 'POST' and 'Nombredellocal' in request.form and 'Direccion' in request.form and 'Correo' in request.form and 'Contraseña' in request.form:
+    if request.method == 'POST' and 'Nombredellocal' in request.form and 'Direccion' in request.form and 'Email' in request.form and 'Contraseña' in request.form:
 
         Nombredellocal = request.form['Nombredellocal']
         Direccion = request.form['Direccion']
-        Correo = request.form['Correo']
+        Email = request.form['Email']
         Contraseña = request.form['Contraseña']
 
         cursor.execute(
@@ -155,17 +165,17 @@ def register2():
         # esto es por si la cuenta que queres registrar ya existe
         if account:
             msg = 'La cuenta ya existe!'
-        elif not re.match(r'[^@]+@[^@]+\.[^@]+', Correo):
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', Email):
             msg = 'Email incorrecto!'
         elif not re.match(r'[A-Za-z0-9]+', Nombredellocal):
             msg = 'El nombre solo debe contener caracteres y numeros!'
-        elif not Nombredellocal or not Contraseña or not Correo:
+        elif not Nombredellocal or not Contraseña or not Email:
             msg = 'Por favor llene el formulario!'
 
         else:
             # ahora si la cuenta no existe te deja registrar por este codigo
             cursor.execute('INSERT INTO datos2 VALUES (NULL, %s, %s, %s, %s)',
-                           (Nombredellocal, Direccion, Correo, Contraseña))
+                           (Nombredellocal, Direccion, Email, Contraseña))
             conn.commit()
 
             msg = 'Has sido registrado con exito, ahora solo debes iniciar sesion!'
@@ -180,12 +190,17 @@ def register2():
 # http://localhost:5000/home - Esta es la pagina a la que accede el usuario al ingresar
 
 
-@app.route('/')
-def home2():
+@app.route('/home')
+def home():
 
     if 'loggedin' in session:
-
+    
         return render_template('home.html', Email=session['Email'])
+
+    if 'loggedin' in session:
+       
+        return render_template('home.html', Correo=session['Correo'])
+        
 
     return redirect(url_for('login'))
 
@@ -199,13 +214,30 @@ def logout():
     session.pop('id', None)
     session.pop('Nombre', None)
     # Redirect to login page
-    return redirect(url_for('login'))
+    return redirect(url_for('login1'))
 
 # http://localhost:5000/profile - aca van a estar todas las caracteristicas de la cuenta
 
 
-@app.route('/profile')
-def profile():
+@app.route('/profile11')
+def profile11():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    if 'loggedin' in session:
+
+        cursor.execute('SELECT * FROM datos WHERE id = %s', [session['id']])
+        datos = cursor.fetchone()
+
+        return render_template('profile1.html', datos=datos)
+    # esto es por is el usuario nopuede ingresar, lo redirecciona
+    return redirect(url_for('login1'))
+
+# http://localhost:5000/profile - aca van a estar todas las caracteristicas de la cuenta
+
+
+@app.route('/profile22')
+def profile22():
 
     conn = mysql.connect()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -215,18 +247,9 @@ def profile():
         cursor.execute('SELECT * FROM datos2 WHERE id = %s', [session['id']])
         datos2 = cursor.fetchone()
 
-        return render_template('profile.html', datos2=datos2)
+        return render_template('profile2.html', datos2=datos2)
     # esto es por is el usuario nopuede ingresar, lo redirecciona
-    return redirect(url_for('login'))
-
-    if 'loggedin' in session:
-
-        cursor.execute('SELECT * FROM datos WHERE id = %s', [session['id']])
-        datos2 = cursor.fetchone()
-
-        return render_template('profile.html', datos=datos)
-    # esto es por is el usuario nopuede ingresar, lo redirecciona
-    return redirect(url_for('login'))
+    return redirect(url_for('login2'))
 
 
 @app.route('/inventario')
@@ -235,14 +258,11 @@ def inventario():
     cursor = conn.cursor(pymysql.cursors.DictCursor)
 
     if 'loggedin' in session:
-        cursor.execute('SELECT * FROM productos WHERE id = %s', [session['id']])
+        cursor.execute('SELECT * FROM productos WHERE id = %s',
+                       [session['id']])
         productos = cursor.fetchone()
 
         return render_template('inventario.html', productos=productos)
-
-
-
-  
 
 
 if __name__ == '__main__':
