@@ -1,0 +1,48 @@
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<form action="/add_producto" method="POST">
+  <input type="text" class="form-control" name="Producto" placeholder="Producto">
+  <input type="text" class="form-control" name="Marca" placeholder="Marca">
+  <input type="text" class="form-control" name="Cantidad" placeholder="Cantidad">
+  <input type="text" class="form-control" name="Precio" placeholder="Precio">
+
+  <button class="btn btn-primary btn-block">
+    Save
+  </button>
+</form>
+
+<table>
+  <thead>
+
+    <tr>
+      <td>Producto </td>
+      <td>Marca</td>
+      <td>Cantidad</td>
+      <td>Precio</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for contact in contacts %}
+    <tr>
+      <td>{{ contact.1 }} </td>
+      <td>{{ contact.3 }} </td>
+      <td>{{ contact.4 }} </td>
+      <td>{{ contact.5 }} </td>
+
+
+    </tr>
+
+
+    {% endfor %}
+
+
+
+  </tbody>
+
+
+</table>
