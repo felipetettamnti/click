@@ -1,6 +1,6 @@
 # app.py
-from flask import Flask, request, session, redirect, url_for, render_template
-from flaskext.mysql import MySQL
+from flask import Flask, request, session, redirect, url_for, render_template, flash
+from flaskext.mysql import MySQL 
 import pymysql
 import re
 
@@ -9,7 +9,7 @@ app = Flask(__name__, template_folder='templates')
 
 app.secret_key = 'mysecretkey'
 
-mysql = MySQL()
+mysql = MySQL(app)
 
 # configuracion para la conexion a msql
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -48,14 +48,14 @@ def login2():
         datos2 = cursor.fetchone()
 
     if request.method == 'POST' and 'Email' in request.form and 'Contraseña' in request.form:
-    
+
         Email = request.form['Email']
         Contraseña = request.form['Contraseña']
 
         cursor.execute(
             'SELECT * FROM datos WHERE Email = %s AND Contraseña = %s', (Email, Contraseña))
 
-        datos = cursor.fetchone()    
+        datos = cursor.fetchone()
 
     # If si la cuenta exisite, te manda a home, que es la pagina que veria el usuario al ingresar, en la misma estan los datos de su cuenta
         if datos2:
@@ -70,7 +70,7 @@ def login2():
             msg = 'Usuario o contraseña'
 
         if datos:
-    
+
             session['loggedin'] = True
             session['id'] = datos['id']
             session['Email'] = datos['Email']
@@ -80,8 +80,6 @@ def login2():
             # esto es un mensaje por si la cagas y escribiste mal
             msg = 'Incorrect username/password!'
 
-   
-   
     return render_template('index.html', msg=msg)
 
 
@@ -176,21 +174,19 @@ def register2():
     return render_template('register.html', msg=msg)
 
 
-# http://localhost:5000/home - Esta es la pagina a la que accede el usuario al ingresar es home.html, es solo una interfaz para tener un recibimiento y de ahi podes elejir que hacer 
-
+# http://localhost:5000/home - Esta es la pagina a la que accede el usuario al ingresar es home.html, es solo una interfaz para tener un recibimiento y de ahi podes elejir que hacer
 
 
 @app.route('/home')
 def home():
 
     if 'loggedin' in session:
-    
+
         return render_template('home.html', Email=session['Email'])
 
     if 'loggedin' in session:
-       
+
         return render_template('home.html', Correo=session['Correo'])
-        
 
     return redirect(url_for('login'))
 
@@ -246,15 +242,30 @@ def profile22():
 def inventario():
     conn = mysql.connect()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
+    cursor.execute('SELECT * FROM inventario')
+    data = cursor.fetchall()
+    cursor.close()
+    return render_template('inventario.html', contacts = data)
 
-    if 'loggedin' in session:
-        cursor.execute('SELECT * FROM productos WHERE id = %s',
-                       [session['id']])
-        productos = cursor.fetchone()
 
-        return render_template('inventario.html', productos=productos)
+@app.route('/add_producto', methods=['POST'])
+def add_producto():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    if request.method == 'POST' and 'Producto' in request.form and 'Marca' in request.form and 'Cantidad' in request.form and 'Precio' in request.form:
+
+        Producto = request.form['Producto']
+        Marca = request.form['Marca']
+        Cantidad = request.form['Cantidad']
+        Precio = request.form['Precio']
+
+        cursor.execute('INSERT INTO inventario (Producto, Marca, Cantidad, Precio) VALUES (%s, %s, %s, %s)',
+                       (Producto, Marca, Cantidad, Precio))
+        conn.commit()
+        flash('Producto agregado con exito')
+        return redirect(url_for('inventario'))
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
